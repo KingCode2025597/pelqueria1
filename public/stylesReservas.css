@@ -1,0 +1,161 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background: #f2f2f2;
+}
+
+h1, h2 {
+  color: #333;
+}
+
+form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.fila {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+label {
+  width: 100px;
+}
+
+input {
+  flex: 1;
+  padding: 5px;
+  margin-left: 10px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.caducada {
+  background-color: #f8d7da; /* Color rojo claro */
+  color: #721c24;
+}
+
+button.eliminar {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+tr.vencido {
+  background-color: #f8d7da;
+}
+
+.btn-regresar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  background-color: #007BFF;
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  font-size: 16px;
+  box-shadow: 0 0 15px rgba(0,123,255,0.6);
+  transition: background-color 0.3s ease;
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 10000;
+
+  /* AURA animada */
+  animation: auraGlow 2s infinite ease-in-out;
+}
+
+.btn-regresar:hover {
+  background-color: #0056b3;
+}
+
+/* Efecto de resplandor animado */
+@keyframes auraGlow {
+  0% {
+    box-shadow: 0 0 10px rgba(0,123,255,0.4), 0 0 20px rgba(0,123,255,0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0,123,255,0.8), 0 0 30px rgba(0,123,255,0.4);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(0,123,255,0.4), 0 0 20px rgba(0,123,255,0.2);
+  }
+}
+
+/* ✅ Estilos responsivos para móviles */
+@media (max-width: 768px) {
+  .fila {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  label {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  input {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  form {
+    padding: 15px;
+  }
+
+  table, th, td {
+    font-size: 14px;
+  }
+
+  .btn-regresar {
+    padding: 10px 14px;
+    font-size: 14px;
+    bottom: 15px;
+    left: 15px;
+  }
+}
+
+/* ✅ Ajustes adicionales para pantallas muy pequeñas */
+@media (max-width: 480px) {
+  table {
+    font-size: 12px;
+  }
+
+  th, td {
+    padding: 6px;
+  }
+
+  .btn-regresar {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+}

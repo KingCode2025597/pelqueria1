@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reservas de Peluquería</title>
+  <link rel="stylesheet" href="stylesReservas.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+
+  <a href="./index.html" class="btn-regresar">
+    <i class="fas fa-door-open"></i> Volver a inicio
+  </a>
+  
+  <h1>Reservar Cita</h1>
+  <form id="reserva-form">
+    <div class="fila">
+      <label>Nombre:</label>
+      <input type="text" name="nombre" required />
+
+      <label>Teléfono:</label>
+      <input type="text" name="telefono" required />
+    </div>
+    <div class="fila">
+      <label>Fecha:</label>
+      <input type="date" name="fecha" required />
+
+      <label>Hora:</label>
+      <input type="time" name="hora" required />
+    </div>
+    <div class="fila">
+      <label>Estilo de corte:</label>
+      <input type="text" name="estilo" required />
+    </div>
+    <button type="submit">Guardar Reserva</button>
+  </form>
+
+  <h2>Reservas Realizadas</h2>
+  <table id="tabla-reservas">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Teléfono</th>
+        <th>Fecha</th>
+        <th>Hora</th>
+        <th>Estilo</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Aquí se insertan las reservas -->
+    </tbody>
+  </table>
+  <script src="/reservas.js"></script>
+  <script src="script.js"></script>
+  
+
+</body>
+</html>

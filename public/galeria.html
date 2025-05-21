@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiberKing Barber VIP Estudio</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Agrega este enlace en el <head> de tu HTML para usar FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+
+    <div class="banner">
+        <nav class="navbar">
+            <div class="logo">
+                <img src="./img/logoLibetiKing.jpg" alt="Logo LiberKing Barber">
+            </div>
+            <div class="socials">
+               
+                <a href="https://www.instagram.com/irunliberkingbarbervipstudio/">📷 Instagram</a>
+           
+                <a href="https://www.tiktok.com/@liberking.barber?is_from_webapp=1&sender_device=pc">🎵 TikTok</a>
+            </div>
+        </nav>
+
+        <div class="nav-links">
+            <a href="./index.html">Inicio</a> |
+            <a href="./Servicios.html">Servicios</a> |
+            <a href="./galeria.html" class="active glow">Galería</a> |
+            <a href="./reservas.html">Reservar-cita</a>
+        </div>
+        <div class="slogan">
+            <h1>GALERÍA</h1>
+            <p id="changing-text">Aquí podrás ver nuestras obras</p>
+        </div>
+    </div>
+
+    <section id="galeria">
+        <h2> Estilos</h2>
+        <div class="carousel">
+            <div class="card_galeria" onmouseover="pauseCarousel()" onmouseout="resumeCarousel()" onclick="openModal('/img/fade clasico.jpg')">
+                <img src="./img/fade clasico.jpg" alt="Fade Clásico">
+                <h3>Fade Clásico</h3>
+                <p>Un degradado suave en los lados con volumen en la parte superior.</p>
+                <span>15€ </span>
+            </div>
+            <div class="card_galeria" onmouseover="pauseCarousel()" onmouseout="resumeCarousel()" onclick="openModal('img/pompadour.jpg')">
+                <img src="./img/pompadour.jpg" alt="Pompadour">
+                <h3>Pompadour</h3>
+                <p>Un estilo con volumen hacia atrás, ideal para un look elegante.</p>
+                <span>15€ </span>
+            </div>
+            <div class="card_galeria" onmouseover="pauseCarousel()" onmouseout="resumeCarousel()" onclick="openModal('img/cotebuzz.jpg')">
+                <img src="./img/cotebuzz.jpg" alt="Corte Buzz">
+                <h3>Corte Buzz</h3>
+                <p>Un corte al ras, práctico y moderno.</p>
+                <span>15€ </span>
+            </div>
+            <div class="card_galeria" onmouseover="pauseCarousel()" onmouseout="resumeCarousel()" onclick="openModal('/img/mohawk.jpg')">
+                <img src="./img/mohawk.jpg" alt="Mohawk">
+                <h3>Mohawk</h3>
+                <p>Estilo rebelde con los lados rapados y volumen central.</p>
+                <span>15€ </span>
+            </div>
+            <div class="card_galeria" onmouseover="pauseCarousel()" onmouseout="resumeCarousel()" onclick="openModal('img/corteCesar.jpg')">
+                <img src="./img/corteCesar.jpg" alt="Corte César">
+                <h3>Corte César</h3>
+                <p>Cabello corto con flequillo recto.</p>
+                <span>15€ </span>
+            </div>
+            <div class="card_galeria" onmouseover="pauseCarousel()" onmouseout="resumeCarousel()" onclick="openModal('img/undercut.png')">
+                <img src="./img/undercut.png" alt="Corte Undercut">
+                <h3>Corte Undercut</h3>
+                <p>Cabello largo arriba con lados rapados.</p>
+                <span>15€ </span>
+            </div>
+            <div class="card_galeria" onmouseover="pauseCarousel()" onmouseout="resumeCarousel()" onclick="openModal('img/quiff.jpg')">
+                <img src="./img/quiff.jpg" alt="Corte Quiff">
+                <h3>Corte Quiff</h3>
+                <p>Similar al Pompadour pero con un look más relajado.</p>
+                <span>15€ </span>
+            </div>
+            <div class="card_galeria" onmouseover="pauseCarousel()" onmouseout="resumeCarousel()" onclick="openModal('img/slick back.jpg')">
+                <img src="./img/slick back.jpg" alt="Peinado Slick Back">
+                <h3>Peinado Slick Back</h3>
+                <p>Cabello peinado completamente hacia atrás.</p>
+                <span>15€ </span>
+            </div>
+            <div class="card_galeria" onmouseover="pauseCarousel()" onmouseout="resumeCarousel()" onclick="openModal('img/highandtight.jpg')">
+                <img src="./img/highandtight.jpg" alt="Corte High & Tight">
+                <h3>Corte High & Tight</h3>
+                <p>Corte militar con laterales rapados y parte superior corta.</p>
+                <span>15€ </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage" src="" alt="Imagen de estilo">
+        <div id="caption"></div>
+    </div>
+
+
+
+    <div class="video-gallery-container">
+        <div class="video-gallery">
+            <div class="side-videos left">
+                <video src="img/video1.mp4" onclick="swapVideo(this)" muted></video>
+                <video src="img/video2.mp4" onclick="swapVideo(this)" muted></video>
+            </div>
+            
+            <div class="main-video">
+                <video id="mainVideo" src="img/AQMO4DuWhCArhcaYyUd9oVTYwpVLL0Ybzx1z8VVNoxKdrMboC2qSblpgSy-6Uf9tT5YJrJ7xtsg7chw_BAWGIfTlq9QyyVPxHi_pzq0.mp4" controls autoplay></video>
+            </div>
+            
+            <div class="side-videos right">
+                <video src="img/video3.mp4" onclick="swapVideo(this)" muted></video>
+                <video src="img/video4.mp4" onclick="swapVideo(this)" muted></video>
+            </div>
+        </div>
+    </div>
+
+    <section class="gallery" id="portafolio">
+        <div class="contenedor">
+          <h2 class="subtitulo">Galería</h2>
+          <div class="contenedor-galeria">
+            <img src="./img/1.jpg" alt="" class="img-galeria">
+            <img src="./img/2.jpg" alt="" class="img-galeria">
+            <img src="./img/3.jpg" alt="" class="img-galeria">
+            <img src="./img/4.jpg" alt="" class="img-galeria">
+            <img src="./img/5.jpg" alt="" class="img-galeria">
+            <img src="./img/6.jpg" alt="" class="img-galeria">
+            <img src="./img/7.jpg" alt="" class="img-galeria">
+            <img src="./img/8.jpg" alt="" class="img-galeria">
+            <img src="./img/9.jpg" alt="" class="img-galeria">
+          </div>
+        </div>
+      </section>
+      
+      <section class="imagen-light">
+        <i class="fas fa-times close"></i>
+        <img src="./img/img-3.jpg" alt="" class="agregar-imagen">
+      </section>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    <div class="mapa-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d362.70201923399145!2d-1.800256368311563!3d43.3432206711185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd51085a60e621d3%3A0xdb0de9a1b62fdd78!2sC.%20de%20Fuenterrab%C3%ADa%2C%2025%2C%2020301%20San%20Sebasti%C3%A1n%2C%20Guip%C3%BAzcoa!5e0!3m2!1ses!2ses!4v1743531931206!5m2!1ses!2ses" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-info">
+                <h3>Liberking Barber VIP Estudio</h3>
+                <p>Tu estilo, nuestra pasión. Ven y vive la mejor experiencia de barbería en Irún.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Enlaces Rápidos</h4>
+               <ul>
+                    <li><a href="./index.html">Inicio</a></li>
+                    <li><a href="./Servicios.html">Servicios</a></li>
+                    <li><a href="./galeria.html">Galería</a></li>
+                    <li><a href="./reservas.html">Reserva-cita</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-socials">
+      <h4>Síguenos</h4>
+      <a href="https://www.tiktok.com/@liberking.barber?is_from_webapp=1&sender_device=pc" target="_blank">
+        <i class="fa-brands fa-tiktok"></i>
+      </a>
+      <a href="https://www.instagram.com/irunliberkingbarbervipstudio/" target="_blank">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+    </div>
+        </div>
+
+        <p class="footer-copy">&copy; 2024 Liberking Barber VIP Estudio - Todos los derechos reservados.</p>
+
+        <!-- Flecha para subir arriba -->
+        <div class="scroll-to-top" onclick="scrollToTop()">
+            <i class="fa-solid fa-chevron-up"></i>
+        </div>
+    </footer>
+
+    <script>
+        // Cambios de texto
+        const phrases = [
+            { text: "Explora nuestra galería y encuentra tu próximo look", color: "#f4b400", font: "Arial, sans-serif" },
+            { text: "Cada imagen cuenta una historia de estilo", color: "#ff5733", font: "Georgia, serif" },
+            { text: "Inspírate con nuestros mejores cortes y estilos", color: "#33c3ff", font: "Courier New, monospace" },
+            { text: "Descubre las tendencias en nuestra galería", color: "#a833ff", font: "Verdana, sans-serif" }
+        ];
+
+        let index = 0;
+        function changeText() {
+            index = (index + 1) % phrases.length;
+            const textElement = document.getElementById("changing-text");
+            textElement.textContent = phrases[index].text;
+            textElement.style.color = phrases[index].color;
+            textElement.style.fontFamily = phrases[index].font;
+        }
+
+        setInterval(changeText, 3000);
+
+        // Para controlar el deslizamiento de las imágenes en el carrusel
+        let carousel = document.querySelector('.carousel');
+        let isPaused = false;
+
+        function slideCards() {
+            if (!isPaused) {
+                carousel.appendChild(carousel.firstElementChild);
+            }
+        }
+
+        function pauseCarousel() {
+            isPaused = true;
+        }
+
+        function resumeCarousel() {
+            isPaused = false;
+        }
+
+        setInterval(slideCards, 5000);
+
+        // Función para abrir el modal con la imagen seleccionada
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            modal.style.display = "block";
+            modalImage.src = imageSrc;
+        }
+
+        // Función para cerrar el modal
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = "none";
+        }
+        
+        function swapVideo(clickedVideo) {
+            let mainVideo = document.getElementById('mainVideo');
+            let tempSrc = mainVideo.src;
+            mainVideo.src = clickedVideo.src;
+            clickedVideo.src = tempSrc;
+       
+            function swapVideo(clickedVideo) {
+    const mainVideo = document.getElementById('mainVideo');
+    const sideVideos = document.querySelectorAll('.side-videos video');
+    
+    // Guardar el estado actual del video principal
+    const wasPlaying = !mainVideo.paused;
+    const currentTime = mainVideo.currentTime;
+    
+    // Intercambiar los src
+    const tempSrc = mainVideo.src;
+    mainVideo.src = clickedVideo.src;
+    
+    // Poner el video principal anterior en la miniatura
+    clickedVideo.src = tempSrc;
+    
+    // Restaurar el estado de reproducción
+    if (wasPlaying) {
+        mainVideo.currentTime = currentTime;
+        mainVideo.play();
+    }
+    
+    // Actualizar clases activas
+    sideVideos.forEach(video => video.classList.remove('active'));
+    clickedVideo.classList.add('active');
+}
+       
+       
+        }
+
+        const imagenes = document.querySelectorAll('.img-galeria');
+const imagenesLight = document.querySelector('.agregar-imagen');
+const contenedorLight = document.querySelector('.imagen-light');
+
+imagenes.forEach(imagen =>{
+    imagen.addEventListener('click', ()=>{
+        aparecerImagen(imagen.getAttribute('src'))
+    
+    })
+})
+
+contenedorLight.addEventListener('click', (e) =>{
+    if(e.target !== imagenesLight){
+        contenedorLight.classList.remove('show');
+        imagenesLight.classList.remove('showImage'); 
+    }
+})
+
+const aparecerImagen = (imagen) =>{
+    imagenesLight.src = imagen;
+    contenedorLight.classList.add('show');
+    imagenesLight.classList.add('showImage');
+}
+
+
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>
