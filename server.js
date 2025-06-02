@@ -1,7 +1,9 @@
+require('dotenv').config(); // 👈 esta línea es la nueva
 const express = require('express');
+const { Pool } = require('pg');
 const cors = require('cors');
-const mysql = require('mysql2');
 const path = require('path');
+
 
 const app = express();
 const PORT = 3000;
@@ -9,124 +11,95 @@ const PORT = 3000;
 // Middlewares
 app.use(cors());
 app.use(express.json());
-
-// Publicar la carpeta public
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Conexión a la base de datos
-const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT || 3306
+// Conexión a PostgreSQL
+const db = new Pool({
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'postgres',
+  password: process.env.DB_PASSWORD || 'admin',
+  database: process.env.DB_NAME || 'peluqueria',
+  port: process.env.DB_PORT || 5432
 });
 
+db.connect()
+  .then(() => console.log('✅ Conectado a PostgreSQL'))
+  .catch(err => console.error('❌ Error al conectar a PostgreSQL:', err));
 
-db.connect((err) => {
-  if (err) {
-    console.error('Error de conexión a MySQL:', err);
-    return;
-  }
-  console.log('Conectado a MySQL');
-});
-
-// Crear tabla reservas si no existe
+// Crear tabla si no existe
 db.query(`
   CREATE TABLE IF NOT EXISTS reservas (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     nombre VARCHAR(100),
     telefono VARCHAR(20),
     fecha DATE,
     hora TIME,
     estilo VARCHAR(255)
   )
-`);
-
-// Endpoints
-/*app.post('/reservas', (req, res) => {
-  let { nombre, telefono, fecha, hora, estilo } = req.body;
-
-  // Formatear fecha para que sea YYYY-MM-DD
-  if (fecha.includes('T')) {
-    fecha = fecha.split('T');
-  }
-
-  db.query(
-    'INSERT INTO reservas (nombre, telefono, fecha, hora, estilo) VALUES (?, ?, ?, ?, ?)',
-    [nombre, telefono, fecha, hora, estilo],
-    (err) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ message: 'Error al guardar' });
-      }
-      res.json({ message: 'Reserva guardada con éxito' });
-    }
-  );
+`).then(() => {
+  console.log('✅ Tabla "reservas" lista');
+}).catch((err) => {
+  console.error('❌ Error al crear tabla:', err);
 });
-*/
 
-app.post('/reservas', (req, res) => {
+// POST /reservas
+app.post('/reservas', async (req, res) => {
   let { nombre, telefono, fecha, hora, estilo } = req.body;
 
   if (fecha.includes('T')) {
-    fecha = fecha.split('T')[0]; // Tomar solo la parte de la fecha
+    fecha = fecha.split('T')[0]; // quitar hora si viene tipo "2025-06-01T14:00"
   }
 
-  // Consultar si hay alguna cita ±10 minutos alrededor de la hora deseada
-  db.query(
-    `SELECT * FROM reservas 
-     WHERE fecha = ? 
-     AND ABS(TIMESTAMPDIFF(MINUTE, hora, ?)) < 10`,
-    [fecha, hora],
-    (err, results) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ message: 'Error al consultar disponibilidad' });
-      }
+  try {
+    const result = await db.query(
+      `SELECT * FROM reservas 
+       WHERE fecha = $1 
+       AND ABS(EXTRACT(EPOCH FROM (hora - $2::time)) / 60) < 10`,
+      [fecha, hora]
+    );
 
-      if (results.length > 0) {
-        return res.status(400).json({ message: 'Ya existe una reserva en ese horario. Intenta con otro.' });
-      }
-
-      // Si no hay conflicto, insertar la nueva reserva
-      db.query(
-        'INSERT INTO reservas (nombre, telefono, fecha, hora, estilo) VALUES (?, ?, ?, ?, ?)',
-        [nombre, telefono, fecha, hora, estilo],
-        (err, result) => {
-          if (err) {
-            console.error(err);
-            return res.status(500).json({ message: 'Error al guardar la reserva' });
-          }
-          // Devuelve el ID insertado
-          res.json({ message: 'Reserva guardada con éxito', id: result.insertId });
-        }
-      );
-      
+    if (result.rows.length > 0) {
+      return res.status(400).json({ message: 'Ya existe una reserva en ese horario. Intenta con otro.' });
     }
-  );
+
+    const insert = await db.query(
+      `INSERT INTO reservas (nombre, telefono, fecha, hora, estilo) 
+       VALUES ($1, $2, $3, $4, $5) RETURNING id`,
+      [nombre, telefono, fecha, hora, estilo]
+    );
+
+    res.json({ message: 'Reserva guardada con éxito', id: insert.rows[0].id });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error en el servidor' });
+  }
 });
 
-
-app.get('/reservas', (req, res) => {
-  db.query('SELECT * FROM reservas ORDER BY id DESC', (err, results) => {
-    if (err) return res.status(500).json({ message: 'Error al obtener datos' });
-    res.json(results);
-  });
+// GET /reservas
+app.get('/reservas', async (req, res) => {
+  try {
+    const result = await db.query('SELECT * FROM reservas ORDER BY id DESC');
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ message: 'Error al obtener datos' });
+  }
 });
 
-app.delete('/reservas/:id', (req, res) => {
+// DELETE /reservas/:id
+app.delete('/reservas/:id', async (req, res) => {
   const id = req.params.id;
-  db.query('DELETE FROM reservas WHERE id = ?', [id], (err) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Error al eliminar' });
-    }
+
+  try {
+    await db.query('DELETE FROM reservas WHERE id = $1', [id]);
     res.json({ message: 'Reserva eliminada con éxito' });
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error al eliminar' });
+  }
 });
 
 // Iniciar servidor
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
 });
