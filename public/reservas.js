@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tablaReservas = document.getElementById('tabla-reservas').getElementsByTagName('tbody')[0];
   
     // Cargar las reservas iniciales desde el servidor cuando la página se carga
-    fetch('http://localhost:3000/reservas')
+    fetch('/reservas')
       .then((response) => response.json())
       .then((reservas) => {
         reservas.forEach((reserva) => {
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
       };
   
       // Enviar los datos al servidor usando fetch
-      fetch('http://localhost:3000/reservas', {
+      fetch('/reservas', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Función para eliminar una reserva
   function eliminarReserva(id) {
     // Llamar a la API para eliminar la reserva
-    fetch(`http://localhost:3000/reservas/${id}`, {
+    fetch(`/reservas/${id}`, {
       method: 'DELETE',
     })
       .then((response) => response.json())

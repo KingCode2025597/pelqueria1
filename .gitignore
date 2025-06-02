@@ -1,0 +1,4 @@
+node_modules/
+.env
+bfg-1.14.0.jar
+peluqueria-postgres.git/
